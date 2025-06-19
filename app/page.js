@@ -1,103 +1,69 @@
-import Image from "next/image";
+"use client"; 
+
+import Sidebar from '../components/Sidebar';
+import Image from 'next/image';
+import { useEffect, useState } from 'react';
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.js
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [isMobile, setIsMobile] = useState(false);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  return (
+    <div style={{
+      fontFamily: 'Segoe UI, sans-serif',
+      backgroundColor: '#f4f4f4',
+      minHeight: '100vh',
+      paddingTop: isMobile ? '160px' : '0'
+    }}>
+
+      {/* DRDO Logo */}
+      <div style={{
+        position: 'fixed',
+        top: '20px',
+        left: '20px',
+        zIndex: 1000
+      }}>
+        <Image
+          src="/logo01.png"
+          alt="DRDO Logo"
+          width={isMobile ? 60 : 80}
+          height={isMobile ? 60 : 80}
+          style={{ borderRadius: '10px', border: '2px solid #333' }}
+        />
+      </div>
+
+      {/* ✅ Sidebar */}
+      <Sidebar />
+
+      {/* ✅ Main Content */}
+      <div style={{
+        padding: isMobile ? '20px' : '40px',
+        marginLeft: isMobile ? '0' : '220px',
+        maxWidth: '900px',
+        marginTop: isMobile ? '150px' : '0',
+        color: '#222'
+      }}>
+        <h1 style={{ fontSize: '2rem', color: '#1f2937' }}>Welcome to the Employee Dashboard</h1>
+
+        <p style={{ fontSize: '1rem', marginTop: '15px', lineHeight: '1.6' }}>
+          This dashboard is designed to streamline the process of reporting technical issues by employees. 
+          Whether it's related to networking, IT infrastructure, or internal software problems, employees can easily file complaints and track status here.
+        </p>
+
+        <h2 style={{ marginTop: '30px', fontSize: '1.4rem', color: '#374151' }}>About DRDO</h2>
+
+        <p style={{ marginTop: '10px', fontSize: '1rem', lineHeight: '1.6' }}>
+          The Defence Research and Development Organisation (DRDO) is the premier agency under the Ministry of Defence, Government of India, 
+          responsible for military research and development. DRDO develops defence technologies in fields such as aeronautics, armaments, combat vehicles, 
+          engineering systems, missiles, advanced computing, naval systems, and life sciences.
+        </p>
+      </div>
     </div>
   );
 }
